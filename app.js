@@ -1,42 +1,67 @@
-// var object = {
-//     "val1": "test1",
-//     "val2": "test2",
-//     "val3": "test3"
-// }
-// console.log("testing");
+let query = 'tiger';
+let pageNum;
 
-// document.getElementById("output").innerHTML = object.val1;
+let getPagesURL = `https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=44f0f3e9f1bc34456bcf2b6df8499796&text=${query}&per_page=500&format=json&nojsoncallback=1`;
 
-let url = "https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=8e7d65d5d917159c80eab5e94d454b58&text=animal&format=json&nojsoncallback=1";
+async function request(url) {
+    const response = await fetch(url);
+    return await response.json();
+};
 
-let jsondata;
+request(getPagesURL).then(data => {
+    console.log(getPagesURL);
+    console.log(data);
 
-let jsonobject = {};
+    let pages = data.photos.pages;
 
-let pages;
+    let pagesOutput = document.getElementById("random-page-output");
+    let photoOutput = document.getElementById("photo-output");
 
-function getJSON() {
-    fetch(url)
-        .then(response => {
-            return response.json();
-        })
-        .then(data => {
-            jsondata = data;
-        })
-        .then(() => {
-            console.log(jsondata);
-            jsonobject = jsondata.photos;
+    pagesOutput.innerHTML = pages;
 
-            console.log(jsonobject);
+    let percentageOfRelevance = 90;
 
-            console.log(jsonobject.pages);
+    let relevanceCalclation = pages * Math.abs(percentageOfRelevance / 100 - 1) - 1;
 
-            let pages = jsonobject.pages;
+    let randomNum = Math.floor(Math.random() * (relevanceCalclation)) + 1;
 
-            document.getElementById("output").innerHTML = pages;
-        });
-}
+    pageNum = randomNum;
 
-pages = document.getElementById("output").innerHTML;
+    pagesOutput.innerHTML += "<br/>" + "<br/>" + "Random number: " + randomNum;
 
-console.log(pages);
+    let getPhotoURL = `https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=44f0f3e9f1bc34456bcf2b6df8499796&text=${query}&sort=relevance&per_page=500&page=${pageNum}&format=json&nojsoncallback=1`;
+
+    request(getPhotoURL).then(data => {
+        console.log(data);
+
+        let photoList = data.photos.photo;
+
+        let listSize = photoList.length;
+
+        for (let i = 0; i < 10; i++) {
+            let randomPhoto = Math.floor(Math.random() * (listSize - 1)) + 1;
+            let currentID = photoList[randomPhoto].id;
+            let photoSrcURL = `https://www.flickr.com/services/rest/?method=flickr.photos.getSizes&api_key=44f0f3e9f1bc34456bcf2b6df8499796&photo_id=${currentID}&format=json&nojsoncallback=1`;
+            request(photoSrcURL).then(data => {
+                console.log("photo data " + i + ": ");
+                console.log(data);
+
+                let photoURL;
+                let sizes;
+
+                sizes = data.sizes.size;
+
+                photoURL = sizes[sizes.length - 1].source;
+
+                photoOutput.innerHTML +=
+                `Image #${i+1}:
+                <br/>
+                <img src="${photoURL}" width="500">
+                <br/>
+                <br/>`
+            });
+        }
+
+        console.log(photoList[0].id);
+    });
+});
