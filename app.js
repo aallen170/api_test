@@ -1,19 +1,19 @@
 let query = 'buildings';
 let pageNum;
 let queryField = document.getElementById("query");
-let searchButton = document.getElementById("search");
+let getPagesURL;
+
+//google images api:
+let googleAPI = `https://www.googleapis.com/customsearch/v1?key=AIzaSyBuzXX0QdY0l4BXgKXkgn-pBur-bRRZ8sQ&cx=001890896498940584054:ltxzdnhqnbk&q=${query}&searchType=image`
 
 queryField.addEventListener('keyup', editURL);
-
-let getPagesURL;
 
 function editURL() {
     let queryValue = document.getElementById('query').value;
     query = queryValue;
     getPagesURL = `https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=44f0f3e9f1bc34456bcf2b6df8499796&text=${query}&sort=relevance&per_page=500&format=json&nojsoncallback=1`;
+    search();
 }
-
-searchButton.addEventListener('click', search);
 
 async function request(url) {
     const response = await fetch(url);
@@ -53,7 +53,9 @@ function search() {
 
             let listSize = photoList.length;
 
-            for (let i = 0; i < 10; i++) {
+            let numOfPhotos = 20;
+
+            for (let i = 0; i < numOfPhotos; i++) {
                 let randomPhoto = Math.floor(Math.random() * (listSize - 1)) + 1;
                 let currentID = photoList[randomPhoto].id;
                 let photoSrcURL = `https://www.flickr.com/services/rest/?method=flickr.photos.getSizes&api_key=44f0f3e9f1bc34456bcf2b6df8499796&photo_id=${currentID}&format=json&nojsoncallback=1`;
@@ -69,7 +71,7 @@ function search() {
                     photoURL = sizes[sizes.length - 1].source;
 
                     photoOutput.innerHTML +=
-                    `<img src="${photoURL}" width="500">`
+                    `<img src="${photoURL}" width="200" style="float: left;">`
                 });
             }
 
