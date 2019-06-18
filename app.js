@@ -1,9 +1,11 @@
 let query = '';
 let pageNum;
 let queryField = document.getElementById("query");
+let searchButton = document.getElementById("search");
 let getPagesURL;
 
 queryField.addEventListener('keyup', editURL);
+searchButton.addEventListener('click', editURL);
 
 function editURL() {
     let queryValue = document.getElementById('query').value;
