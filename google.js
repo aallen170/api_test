@@ -20,26 +20,39 @@ async function request(url) {
 };
 
 function search() {
-    let numOfPages = 3;
+    let numOfPages = 15;
     let photoList = [];
 
+    //Make non-repeatable random numbers between 1 - 90
     for (let i = 0; i < numOfPages; i++) {
-        let pageNum = Math.floor(Math.random() * (91)) + 1;
+        let numberList = [];
+        for (let i = 1; i <= 90; i++) numberList.push(i);
+
+        let randomNumberList = [],
+        i = numberList.length,
+        j = 0;
+
+        while (i--) {
+            j = Math.floor(Math.random() * (i+1));
+            randomNumberList.push(numberList[j]);
+            numberList.splice(j,1);
+        }
+        
+        let pageNum;
 
         console.log(pageNum);
 
         getPagesURL = `https://www.googleapis.com/customsearch/v1?key=AIzaSyBuzXX0QdY0l4BXgKXkgn-pBur-bRRZ8sQ&cx=001890896498940584054:ltxzdnhqnbk&q=${query}&searchType=image&start=${pageNum}`
 
         request(getPagesURL).then(data => {
-            console.log(data);
             data.items.forEach(item => {
                 photoList.push(item);
             });
         });
+        console.log(getPagesURL);
     }
     
     request(getPagesURL).then(data => {
-
         pagesOutput.innerHTML = '';
         photoOutput.innerHTML = '';
 
