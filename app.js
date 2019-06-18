@@ -1,10 +1,7 @@
-let query = 'buildings';
+let query = '';
 let pageNum;
 let queryField = document.getElementById("query");
 let getPagesURL;
-
-//google images api:
-let googleAPI = `https://www.googleapis.com/customsearch/v1?key=AIzaSyBuzXX0QdY0l4BXgKXkgn-pBur-bRRZ8sQ&cx=001890896498940584054:ltxzdnhqnbk&q=${query}&searchType=image`
 
 queryField.addEventListener('keyup', editURL);
 
@@ -78,4 +75,4 @@ function search() {
             console.log(photoList[0].id);
         });
     });
-}
+};
