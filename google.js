@@ -49,18 +49,20 @@ function search() {
         getPagesURL = `https://www.googleapis.com/customsearch/v1?key=AIzaSyBuzXX0QdY0l4BXgKXkgn-pBur-bRRZ8sQ&cx=001890896498940584054:ltxzdnhqnbk&q=${query}&searchType=image&start=${pageNum}`
 
         request(getPagesURL).then(data => {
-            console.log(data);
+            console.log("items:");
+            console.log(data.items);
             data.items.forEach(item => {
+                console.log(item);
                 photoList.push(item);
             });
+        }).then(() => {
+            pagesOutput.innerHTML = '';
+            photoOutput.innerHTML = '';
+        
+            photoList.forEach(photoInfo => {
+                photoOutput.innerHTML +=
+                `<img src="${photoInfo.link}" width="200" style="float: left;">`
+            });
         });
-        console.log(getPagesURL);
     }
-    pagesOutput.innerHTML = '';
-    photoOutput.innerHTML = '';
-
-    photoList.forEach(photoInfo => {
-        photoOutput.innerHTML +=
-        `<img src="${photoInfo.link}" width="200" style="float: left;">`
-    });
 };
