@@ -70,7 +70,7 @@ function search() {
                     photoURL = sizes[sizes.length - 1].source;
 
                     photoOutput.innerHTML +=
-                    `<img src="${photoURL}" width="200" style="float: left;">`
+                    `<img src="${photoURL}" width="300" style="float: left;">`
                 });
             }
 

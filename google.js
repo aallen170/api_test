@@ -61,7 +61,7 @@ function search() {
         
             photoList.forEach(photoInfo => {
                 photoOutput.innerHTML +=
-                `<img src="${photoInfo.link}" width="200" style="float: left;">`
+                `<img src="${photoInfo.link}" width="300" style="float: left;">`
             });
         });
     }
