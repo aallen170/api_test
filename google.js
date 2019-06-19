@@ -2,6 +2,7 @@ let query = '';
 let pageNum;
 let queryField = document.getElementById("query");
 let searchButton = document.getElementById("search");
+let clearPageButton = document.getElementById("clear");
 let getPagesURL;
 
 let pagesOutput = document.getElementById("random-page-output");
@@ -9,17 +10,27 @@ let photoOutput = document.getElementById("photo-output");
 
 queryField.addEventListener('keyup', editURL);
 searchButton.addEventListener('click', editURL);
+clearPageButton.addEventListener('click', clearPage);
 
 function editURL() {
-    query = document.getElementById('query').value;
-    getPagesURL = `https://www.googleapis.com/customsearch/v1?key=AIzaSyBuzXX0QdY0l4BXgKXkgn-pBur-bRRZ8sQ&cx=001890896498940584054:ltxzdnhqnbk&q=${query}&searchType=image`
-    search();
+    query = queryField.value;
+    if (query === '') {
+        clearPage();
+    } else {
+        getPagesURL = `https://www.googleapis.com/customsearch/v1?key=AIzaSyBuzXX0QdY0l4BXgKXkgn-pBur-bRRZ8sQ&cx=001890896498940584054:ltxzdnhqnbk&q=${query}&searchType=image`
+        search();
+    }
 };
 
 async function request(url) {
     const response = await fetch(url);
     return await response.json();
 };
+
+function clearPage() {
+    pagesOutput.innerHTML = '';
+    photoOutput.innerHTML = '';
+}
 
 function search() {
     let numOfPages = 3;
@@ -56,8 +67,7 @@ function search() {
                 photoList.push(item);
             });
         }).then(() => {
-            pagesOutput.innerHTML = '';
-            photoOutput.innerHTML = '';
+            clearPage();
         
             photoList.forEach(photoInfo => {
                 photoOutput.innerHTML +=
