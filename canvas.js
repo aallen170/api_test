@@ -1,22 +1,27 @@
 // Make the DIV element draggable:
-dragElement(document.getElementById("obj"));
+mouseDragElement(document.getElementById("obj"));
+// touchDragElement(document.getElementById("obj"));
 
 //change
 
-document.addEventListener('touchstart', function() {
-  console.log("touching");
+let obj = document.getElementById("obj");
+console.log(obj);
+obj.addEventListener('touchstart', () => {
+  console.log('touching');
 });
 
-function dragElement(elmnt) {
+function mouseDragElement(elmnt) {
   var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
   if (document.getElementById(elmnt.id)) {
     // if present, the header is where you move the DIV from:
-    // document.getElementById(elmnt.id).onmousedown = dragMouseDown;
-    document.getElementById(elmnt.id).ontouchstart = dragMouseDown;
+    document.getElementById(elmnt.id).onmousedown = dragMouseDown;
+    elmnt.getElementById(elmnt.id).ontouchstart = dragMouseDown;
+    // elmnt.addEventListener('touchstart', dragMouseDown);
   } else {
     // otherwise, move the DIV from anywhere inside the DIV: 
-    // elmnt.onmousedown = dragMouseDown;
+    elmnt.onmousedown = dragMouseDown;
     elmnt.ontouchstart = dragMouseDown;
+    // elmnt.addEventListener('touchstart', dragMouseDown);
   }
 
   function dragMouseDown(e) {
@@ -25,14 +30,17 @@ function dragElement(elmnt) {
     // get the mouse cursor position at startup:
     pos3 = e.clientX;
     pos4 = e.clientY;
-    // document.onmouseup = closeDragElement;
-    document.ontouchend = closeDragElement;
+    document.onmouseup = closeDragElement;
+    elmnt.ontouchend = closeDragElement;
+    // elmnt.addEventListener('touchend', closeDragElement);
     // call a function whenever the cursor moves:
-    // document.onmousemove = elementDrag;
-    document.ontouchmove = elementDrag;
+    document.onmousemove = elementDrag;
+    elmnt.ontouchmove = elementDrag;
+    // elmnt.addEventListener('touchmove', elementDrag);
   }
 
   function elementDrag(e) {
+    console.log("dragging");
     e = e || window.event;
     e.preventDefault();
     // calculate the new cursor position:
@@ -46,13 +54,21 @@ function dragElement(elmnt) {
   }
 
   function closeDragElement() {
+    console.log("closing drag");
     // stop moving when mouse button is released:
-    // document.onmouseup = null;
-    // document.onmousemove = null;
-    document.ontouchend = null;
-    document.ontouchmove = null;
+    document.onmouseup = null;
+    document.onmousemove = null;
+    elmnt.ontouchend = null;
+    elmnt.ontouchmove = null;
   }
 }
+
+// function touchDragElement(elmnt) {
+//   var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
+//   if (document.getElementById(elmnt.id)) {
+    
+//   }
+// }
 
 // // Constructor for Shape objects to hold data for all drawn objects.
 // // For now they will just be defined as rectangles.
