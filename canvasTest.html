@@ -8,10 +8,18 @@
     <title>Canvas Test</title>
 </head>
 <body>
+    <div class='resizable'>
+    </div>
+    
     <!-- Draggable DIV -->
-    <div id="obj">
-        <!-- Include a header DIV with the same name as the draggable DIV, followed by "header" -->
-        <img src="https://img.purch.com/w/660/aHR0cDovL3d3dy5saXZlc2NpZW5jZS5jb20vaW1hZ2VzL2kvMDAwLzEwMC8zNDkvb3JpZ2luYWwvc2liZXJpYW4tdGlnZXIuanBn" width="200">
+    <div id="obj" style="width: 200px;">
+        <div class='resizers'>
+            <div class='resizer top-left'></div>
+            <div class='resizer top-right'></div>
+            <div class='resizer bottom-left'></div>
+            <div class='resizer bottom-right'></div>
+        </div>
+        <img src="https://img.purch.com/w/660/aHR0cDovL3d3dy5saXZlc2NpZW5jZS5jb20vaW1hZ2VzL2kvMDAwLzEwMC8zNDkvb3JpZ2luYWwvc2liZXJpYW4tdGlnZXIuanBn">
     </div>
     <script src="canvas.js"></script>
     <!-- <script src="defaltDrag.js"></script> -->

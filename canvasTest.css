@@ -1,7 +1,11 @@
+html {
+    background-color: #9ba5b6;
+}
+
 #obj {
     position: absolute;
-    z-index: 9;
-    background-color: #f1f1f1;
-    border: 5px solid #000000;
-    text-align: center;
+}
+
+img {
+    width: 100%;
 }
