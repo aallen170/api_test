@@ -1,10 +1,10 @@
 // Make the DIV element draggable:
-mouseDragElement(document.getElementById("obj"));
+let obj = document.getElementsByClassName("resizable")[0];
+mouseDragElement(obj);
 // touchDragElement(document.getElementById("obj"));
 
 //change
 
-let obj = document.getElementById("obj");
 console.log(obj);
 obj.addEventListener('touchstart', () => {
   console.log('touching');
@@ -12,10 +12,10 @@ obj.addEventListener('touchstart', () => {
 
 function mouseDragElement(elmnt) {
   var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
-  if (document.getElementById(elmnt.id)) {
+  if (document.getElementsByClassName(elmnt.className)[0]) {
     // if present, the header is where you move the DIV from:
-    document.getElementById(elmnt.id).onmousedown = dragMouseDown;
-    elmnt.getElementById(elmnt.id).ontouchstart = dragMouseDown;
+    document.getElementsByClassName(elmnt.className)[0].onmousedown = dragMouseDown;
+    // elmnt.ontouchstart = dragMouseDown;
     // elmnt.addEventListener('touchstart', dragMouseDown);
   } else {
     // otherwise, move the DIV from anywhere inside the DIV: 
