@@ -7,6 +7,7 @@ let getPagesURL;
 
 let pagesOutput = document.getElementById("random-page-output");
 let photoOutput = document.getElementById("photo-output");
+let obj = document.getElementById("obj");
 
 queryField.addEventListener('keyup', editURL);
 searchButton.addEventListener('click', editURL);
@@ -28,31 +29,17 @@ async function request(url) {
 };
 
 function clearPage() {
-    pagesOutput.innerHTML = '';
-    photoOutput.innerHTML = '';
+    // pagesOutput.innerHTML = '';
+    // photoOutput.innerHTML = '';
+    obj.innerHTML = '';
 }
 
 function search() {
-    let numOfPages = 3;
+    let numOfPages = 1;
     let photoList = [];
 
     //Make non-repeatable random numbers between 1 - 90
     for (let i = 0; i < numOfPages; i++) {
-        // let numberList = [];
-        // for (let i = 1; i <= 90; i++) numberList.push(i);
-
-        // let randomNumberList = [],
-        // i = numberList.length,
-        // j = 0;
-
-        // while (i--) {
-        //     j = Math.floor(Math.random() * (i+1));
-        //     randomNumberList.push(numberList[j]);
-        //     numberList.splice(j,1);
-        // }
-        
-        // let pageNum;
-
         let pageNum = Math.floor(Math.random() * 90) + 1;
 
         console.log(pageNum);
@@ -70,9 +57,46 @@ function search() {
             clearPage();
         
             photoList.forEach(photoInfo => {
-                photoOutput.innerHTML +=
-                `<img src="${photoInfo.link}" width="300" style="float: left;">`
+                obj.innerHTML +=
+                `<div class="resizable" style="width: 200px;">
+                    <div class='resizers'>
+                        <img src="${photoInfo.link}">
+                        <div class='resizer top-left'></div>
+                        <div class='resizer top-right'></div>
+                        <div class='resizer bottom-left'></div>
+                        <div class='resizer bottom-right'></div>
+                    </div>
+                </div>`
+                // `<img src="${photoInfo.link}">`
             });
+
+            let resizableObjs = document.getElementsByClassName("resizable");
+
+            console.log("resizableObjs:");
+            console.log(resizableObjs);
+
+            console.log("resizableObjs length = " + resizableObjs.length);
+
+            // mouseDragElement(resizableObjs[9]);
+
+            // console.log(resizableObjs[9]);
+
+            // resizableObjs[9].addEventListener('touchstart', () => {
+            //     console.log('touching');
+            // });
+
+            for (let i = 0; i < resizableObjs.length; i++) {
+                console.log("resizableObj #" + i + ": ");
+                console.log(resizableObjs[i]);
+                resizableObjs[i].addEventListener('touchstart', () => {
+                    console.log('touching');
+                });
+                mouseDragElement(resizableObjs[i]);
+            }
+
+            // resizableObjs.forEach(obj => {
+            //     mouseDragElement(obj);
+            // });
         });
     }
 };
