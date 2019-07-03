@@ -2,6 +2,8 @@
 function makeResizableDiv(div) {
     const element = document.querySelector(div);
     const resizers = document.querySelectorAll(div + ' .resizer')
+    console.log("resizers length:");
+    console.log(resizers.length);
     const minimum_size = 20;
     let original_width = 0;
     let original_height = 0;
@@ -76,4 +78,4 @@ function makeResizableDiv(div) {
     }
   }
   
-  makeResizableDiv('.resizable')
+  // makeResizableDiv('.resizable')

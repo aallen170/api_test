@@ -5,9 +5,7 @@ let searchButton = document.getElementById("search");
 let clearPageButton = document.getElementById("clear");
 let getPagesURL;
 
-let pagesOutput = document.getElementById("random-page-output");
-let photoOutput = document.getElementById("photo-output");
-let obj = document.getElementById("obj");
+let results = document.getElementById("results");
 
 queryField.addEventListener('keyup', editURL);
 searchButton.addEventListener('click', editURL);
@@ -29,9 +27,7 @@ async function request(url) {
 };
 
 function clearPage() {
-    // pagesOutput.innerHTML = '';
-    // photoOutput.innerHTML = '';
-    obj.innerHTML = '';
+    results.innerHTML = '';
 }
 
 function search() {
@@ -55,10 +51,13 @@ function search() {
             });
         }).then(() => {
             clearPage();
-        
-            photoList.forEach(photoInfo => {
-                obj.innerHTML +=
-                `<div class="resizable" style="width: 200px;">
+
+            // let resizableObjs = [];
+            // let objNum = 0;
+
+            photoList.forEach((photoInfo, i) => {
+                results.innerHTML +=
+                `<div class="resizable" id="obj${i}" style="width: 200px;">
                     <div class='resizers'>
                         <img src="${photoInfo.link}">
                         <div class='resizer top-left'></div>
@@ -66,8 +65,21 @@ function search() {
                         <div class='resizer bottom-left'></div>
                         <div class='resizer bottom-right'></div>
                     </div>
-                </div>`
-                // `<img src="${photoInfo.link}">`
+                </div>`;
+                // console.log("increased i:");
+                // console.log(i);
+
+                // resizableObjs.push(document.getElementById(`obj${i}`));
+
+                // console.log(resizableObjs[i]);
+
+                // console.log("resizableObj #" + i + ": ");
+                // console.log(resizableObjs[i]);
+                // resizableObjs[i].addEventListener('touchstart', () => {
+                //     console.log('touching');
+                // });
+                // mouseDragElement(resizableObjs[i]);
+                // makeResizableDiv(`#obj${i}`);
             });
 
             let resizableObjs = document.getElementsByClassName("resizable");
@@ -77,14 +89,6 @@ function search() {
 
             console.log("resizableObjs length = " + resizableObjs.length);
 
-            // mouseDragElement(resizableObjs[9]);
-
-            // console.log(resizableObjs[9]);
-
-            // resizableObjs[9].addEventListener('touchstart', () => {
-            //     console.log('touching');
-            // });
-
             for (let i = 0; i < resizableObjs.length; i++) {
                 console.log("resizableObj #" + i + ": ");
                 console.log(resizableObjs[i]);
@@ -92,6 +96,7 @@ function search() {
                     console.log('touching');
                 });
                 mouseDragElement(resizableObjs[i]);
+                makeResizableDiv(`#obj${i}`);
             }
 
             // resizableObjs.forEach(obj => {

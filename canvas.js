@@ -12,17 +12,16 @@
 //change
 
 function mouseDragElement(elmnt) {
-  console.log("starging mouseDragElement");
+  console.log("activating obj: " + elmnt.id);
   var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
-  if (document.getElementsByClassName(elmnt.className)[0]) {
-    console.log("true");
+  if (document.getElementById(elmnt.id)) {
+  // if (document.getElementsByClassName(elmnt.className)[0]) {
     // if present, the header is where you move the DIV from:
     // document.getElementsByClassName(elmnt.className)[0].onmousedown = dragMouseDown;
     elmnt.onmousedown = dragMouseDown;
     // elmnt.ontouchstart = dragMouseDown;
     // elmnt.addEventListener('touchstart', dragMouseDown);
   } else {
-    console.log("false");
     // otherwise, move the DIV from anywhere inside the DIV: 
     elmnt.onmousedown = dragMouseDown;
     elmnt.ontouchstart = dragMouseDown;
