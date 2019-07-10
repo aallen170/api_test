@@ -52,9 +52,6 @@ function search() {
         }).then(() => {
             clearPage();
 
-            // let resizableObjs = [];
-            // let objNum = 0;
-
             photoList.forEach((photoInfo, i) => {
                 results.innerHTML +=
                 `<div class="resizable" id="obj${i}" style="width: 200px;">
@@ -66,20 +63,6 @@ function search() {
                         <div class='resizer bottom-right'></div>
                     </div>
                 </div>`;
-                // console.log("increased i:");
-                // console.log(i);
-
-                // resizableObjs.push(document.getElementById(`obj${i}`));
-
-                // console.log(resizableObjs[i]);
-
-                // console.log("resizableObj #" + i + ": ");
-                // console.log(resizableObjs[i]);
-                // resizableObjs[i].addEventListener('touchstart', () => {
-                //     console.log('touching');
-                // });
-                // mouseDragElement(resizableObjs[i]);
-                // makeResizableDiv(`#obj${i}`);
             });
 
             let resizableObjs = document.getElementsByClassName("resizable");
@@ -98,10 +81,6 @@ function search() {
                 mouseDragElement(resizableObjs[i]);
                 makeResizableDiv(`#obj${i}`);
             }
-
-            // resizableObjs.forEach(obj => {
-            //     mouseDragElement(obj);
-            // });
         });
     }
 };
