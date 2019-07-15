@@ -10,9 +10,9 @@ searchButton.addEventListener('click', editURL);
 function editURL() {
     // let queryValue = document.getElementById('query').value;
     // query = queryValue;
-    let photosetID = 72157698739446480;
+    let photosetID = 72157709602266392;
     // change URL to get album photos
-    getPagesURL = `https://www.flickr.com/services/rest/?method=flickr.photosets.getPhotos&api_key=44f0f3e9f1bc34456bcf2b6df8499796&photoset_id=${photosetID}&format=json&nojsoncallback=1`
+    getPagesURL = `https://www.flickr.com/services/rest/?method=flickr.photosets.getPhotos&api_key=44f0f3e9f1bc34456bcf2b6df8499796&photoset_id=${photosetID}&format=json&nojsoncallback=1`;
     // getPagesURL = `https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=44f0f3e9f1bc34456bcf2b6df8499796&text=${query}&sort=relevance&per_page=500&format=json&nojsoncallback=1`;
     search();
 }
