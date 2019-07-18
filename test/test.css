@@ -1,18 +1,42 @@
-#accordian section p {
-    display: none;
-    text-align: center;
+.ulbackground {
+    background-color: darkslategray;
+    padding-left: 0px;
+    padding-bottom: 16px;
+    padding-top: 16px;
+    padding-right: 0px;
+    margin: 0;
+    width: 100%;
+    
+    position: fixed;
+    top: 0px;
 }
 
-#accordian section a {
-    text-align: center;
-    color: black;
+body {
+    margin-top: 80px;
+    padding: 0;
+}
+
+.list-link {
     text-decoration: none;
+    padding: 16px 8px;
+    color: white;
 }
 
-#accordian section a:hover {
-    text-decoration: underline;
+.list-link:hover {
+    background-color: slategray;
 }
 
-#accordian section:target p {
-    display: block;
+.list-link:active {
+    background-color: darkcyan;
+}
+
+.list-link:visited {
+    color: darkgray;
+}
+
+.navbutton {
+    padding: 0;
+    display: inline;
+    font-family: Arial, sans-serif;
+    font-size: 28px;
 }
