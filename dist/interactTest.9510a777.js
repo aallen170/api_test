@@ -9747,6 +9747,11 @@ exports["default"] = _default;
 },{}],"interactTest.js":[function(require,module,exports) {
 "use strict";
 
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.PhotoInteract = PhotoInteract;
+
 var _interactjs = _interopRequireDefault(require("interactjs"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -9755,37 +9760,37 @@ var angleScale = {
   angle: 0,
   scale: 1
 };
-var gestureArea = document.getElementById('gesture-area');
-var scaleElement = document.getElementById('scale-element');
-var resetTimeout;
-(0, _interactjs.default)(gestureArea).gesturable({
-  onstart: function onstart(event) {
-    angleScale.angle -= event.angle;
-    clearTimeout(resetTimeout);
-    scaleElement.classList.remove('reset');
-  },
-  onmove: function onmove(event) {
-    // document.body.appendChild(new Text(event.scale))
-    var currentAngle = event.angle + angleScale.angle;
-    var currentScale = event.scale * angleScale.scale;
-    scaleElement.style.webkitTransform = scaleElement.style.transform = 'rotate(' + currentAngle + 'deg)' + 'scale(' + currentScale + ')'; // uses the dragMoveListener from the draggable demo above
+var gestureAreas = document.getElementsByClassName("gesture-area");
+var scaleElements = document.getElementsByClassName("scale-element");
 
-    dragMoveListener(event);
-  },
-  onend: function onend(event) {
-    angleScale.angle = angleScale.angle + event.angle;
-    angleScale.scale = angleScale.scale * event.scale;
-    resetTimeout = setTimeout(reset, 1000);
-    scaleElement.classList.add('reset');
+function PhotoInteract() {
+  var _loop = function _loop(i) {
+    var gestureArea = gestureAreas[i];
+    var scaleElement = scaleElements[i];
+    (0, _interactjs.default)(gestureArea).gesturable({
+      onstart: function onstart(event) {
+        angleScale.angle -= event.angle;
+      },
+      onmove: function onmove(event) {
+        // document.body.appendChild(new Text(event.scale))
+        var currentAngle = event.angle + angleScale.angle;
+        var currentScale = event.scale * angleScale.scale;
+        scaleElement.style.webkitTransform = scaleElement.style.transform = 'rotate(' + currentAngle + 'deg)' + 'scale(' + currentScale + ')'; // uses the dragMoveListener from the draggable demo above
+
+        dragMoveListener(event);
+      },
+      onend: function onend(event) {
+        angleScale.angle = angleScale.angle + event.angle;
+        angleScale.scale = angleScale.scale * event.scale;
+      }
+    }).draggable({
+      onmove: dragMoveListener
+    });
+  };
+
+  for (var i = 0; i < gestureAreas.length; i++) {
+    _loop(i);
   }
-}).draggable({
-  onmove: dragMoveListener
-});
-
-function reset() {
-  scaleElement.style.webkitTransform = scaleElement.style.transform = 'scale(1)';
-  angleScale.angle = 0;
-  angleScale.scale = 1;
 }
 
 function dragMoveListener(event) {
@@ -9801,7 +9806,7 @@ function dragMoveListener(event) {
 } // this is used later in the resizing and gesture demos
 
 
-window.dragMoveListener = dragMoveListener;
+window.dragMoveListener = dragMoveListener; // PhotoInteract();
 },{"interactjs":"node_modules/interactjs/dist/interact.js"}],"../../AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
@@ -9830,7 +9835,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "61641" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "63327" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

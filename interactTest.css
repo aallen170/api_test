@@ -2,14 +2,11 @@ html {
     background-color: #9ba5b6;
 }
 
-#scale-element {
+.scale-element {
+    position: absolute;
     display: block;
     max-width: 100%;
-    margin: auto;
+    margin: 0;
     touch-action: none;
-}
-
-#scale-element.reset {
-    transition: -webkit-transform 0.3s ease-in-out;
-    transition: transform 0.3s ease-in-out;
-}
+    width: 200px;
+  }
