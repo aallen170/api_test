@@ -1,0 +1,17 @@
+html {
+    background-color: #9ba5b6;
+}
+
+#scale-element {
+    display: block;
+    max-width: 100%;
+    margin: auto;
+    touch-action: none;
+}
+
+#scale-element.reset {
+    transition: -webkit-transform 0.3s ease-in-out;
+    transition: transform 0.3s ease-in-out;
+}
+
+/*# sourceMappingURL=/interactTest.5a1f907b.css.map */

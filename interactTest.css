@@ -2,14 +2,14 @@ html {
     background-color: #9ba5b6;
 }
 
-.scale-element {
+#scale-element {
     display: block;
     max-width: 100%;
     margin: auto;
     touch-action: none;
 }
 
-.scale-element.reset {
+#scale-element.reset {
     transition: -webkit-transform 0.3s ease-in-out;
     transition: transform 0.3s ease-in-out;
 }

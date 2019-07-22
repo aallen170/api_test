@@ -1,0 +1,6 @@
+#scale-element {
+    display: block;
+    max-width: 25%;
+    margin: auto;
+    touch-action: none;
+}

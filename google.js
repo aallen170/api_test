@@ -1,3 +1,5 @@
+import "babel-polyfill";
+
 let query = '';
 let pageNum;
 let queryField = document.getElementById("query");
@@ -5,7 +7,8 @@ let searchButton = document.getElementById("search");
 let clearPageButton = document.getElementById("clear");
 let getPagesURL;
 
-let results = document.getElementById("results");
+// let results = document.getElementById("results");
+let results = document.getElementById("gesture-area");
 
 queryField.addEventListener('keyup', editURL);
 searchButton.addEventListener('click', editURL);
@@ -52,25 +55,29 @@ function search() {
         }).then(() => {
             clearPage();
 
+            // photoList.forEach((photoInfo, i) => {
+            //     results.innerHTML +=
+            //     `<div class="resizable" id="obj${i}" style="width: 200px;">
+            //         <div class='resizers'>
+            //             <img src="${photoInfo.link}">
+            //             <div class='resizer top-left'></div>
+            //             <div class='resizer top-right'></div>
+            //             <div class='resizer bottom-left'></div>
+            //             <div class='resizer bottom-right'></div>
+            //         </div>
+            //     </div>`;
+            // });
             photoList.forEach((photoInfo, i) => {
                 results.innerHTML +=
-                `<div class="resizable" id="obj${i}" style="width: 200px;">
-                    <div class='resizers'>
-                        <img src="${photoInfo.link}">
-                        <div class='resizer top-left'></div>
-                        <div class='resizer top-right'></div>
-                        <div class='resizer bottom-left'></div>
-                        <div class='resizer bottom-right'></div>
-                    </div>
-                </div>`;
+                `<img src="${photoInfo.link}" id="scale-element${i}" style="width: 200px;">`;
             });
 
             let resizableObjs = document.getElementsByClassName("resizable");
 
-            console.log("resizableObjs:");
-            console.log(resizableObjs);
+            // console.log("resizableObjs:");
+            // console.log(resizableObjs);
 
-            console.log("resizableObjs length = " + resizableObjs.length);
+            // console.log("resizableObjs length = " + resizableObjs.length);
 
             for (let i = 0; i < resizableObjs.length; i++) {
                 console.log("resizableObj #" + i + ": ");
@@ -79,7 +86,7 @@ function search() {
                     console.log('touching');
                 });
                 mouseDragElement(resizableObjs[i]);
-                makeResizableDiv(`#obj${i}`);
+                makeResizableDiv(`#scale-element${i}`);
             }
         });
     }

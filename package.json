@@ -1,0 +1,28 @@
+{
+  "name": "api_test",
+  "version": "1.0.0",
+  "description": "",
+  "main": "canvas.js",
+  "directories": {
+    "test": "test"
+  },
+  "dependencies": {
+    "babel-polyfill": "^6.26.0",
+    "interactjs": "^1.4.0-rc.13"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aallen170/api_test.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/aallen170/api_test/issues"
+  },
+  "homepage": "https://github.com/aallen170/api_test#readme"
+}

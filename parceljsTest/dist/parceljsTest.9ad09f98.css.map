@@ -1,0 +1,1 @@
+{"version":3,"sources":["index.css"],"names":[],"mappings":"AAAA;AACA;AACA;AACA;AACA;AACA","file":"parceljsTest.9ad09f98.css","sourceRoot":"..","sourcesContent":["#scale-element {\r\n    display: block;\r\n    max-width: 25%;\r\n    margin: auto;\r\n    touch-action: none;\r\n}"]}
