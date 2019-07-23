@@ -9765,13 +9765,16 @@ var scaleElements = document.getElementsByClassName("scale-element");
 
 function PhotoInteract() {
   var _loop = function _loop(i) {
+    console.log("running");
     var gestureArea = gestureAreas[i];
     var scaleElement = scaleElements[i];
     (0, _interactjs.default)(gestureArea).gesturable({
       onstart: function onstart(event) {
         angleScale.angle -= event.angle;
+        console.log("current: ".concat(event.target.className, " #").concat(i));
       },
       onmove: function onmove(event) {
+        // console.log(event.angle);
         // document.body.appendChild(new Text(event.scale))
         var currentAngle = event.angle + angleScale.angle;
         var currentScale = event.scale * angleScale.scale;
@@ -9794,7 +9797,8 @@ function PhotoInteract() {
 }
 
 function dragMoveListener(event) {
-  var target = event.target; // keep the dragged position in the data-x/data-y attributes
+  var target = event.target;
+  console.log(event.target.id); // keep the dragged position in the data-x/data-y attributes
 
   var x = (parseFloat(target.getAttribute('data-x')) || 0) + event.dx;
   var y = (parseFloat(target.getAttribute('data-y')) || 0) + event.dy; // translate the element
@@ -9835,7 +9839,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "63500" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "53159" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

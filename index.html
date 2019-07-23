@@ -13,6 +13,7 @@
 
     <button id="search">Search</button>
     <button id="clear">Clear Page</button>
+    <div id="deleteDIV"><button id="deleteBTN">Delete Selected Img</button></div>
 
     <!-- <div class="resizable" style="width: 200px;">
         <div class='resizers'>
@@ -37,7 +38,7 @@
     
 </body>
 
-    <script>
+    <!-- <script>
 
         let currArea = 'empty', prevArea = 'empty',
             currElement = 'empty', prevElement = 'empty';
@@ -50,11 +51,14 @@
 
                 currArea = e.target.parentNode;
 
+                console.log(`currArea.className before change: ${currArea.className}`);
+
                 if (currArea !== prevArea) {
                     prevArea.className = "gesture-area";
                 }
 
                 currArea.className = "gesture-area top-img";
+                console.log(`currArea.className after change: ${currArea.className}`);
                 prevArea = currArea;
 
                 if (e.target.className.split(' ')[0] === "scale-element") {
@@ -102,10 +106,12 @@
             }, false);
         }
     
-    </script>
+    </script> -->
 
     <script src="interactTest.js"></script>
     <script src="google.js"></script>
+    <script src="topImg.js"></script>
+    <script src="deletePhoto.js"></script>
     <!-- <script src="flickr.js"></script> -->
     <!-- <script src="canvas.js"></script> -->
     <!-- <script src="makeResizableDiv_1.js"></script> -->

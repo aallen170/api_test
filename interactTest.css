@@ -16,10 +16,6 @@ html {
     width: 200px;
 }
 
-.top-img {
-    z-index: 1;
-}
-
-.selected-img {
+#selected-img {
     border: 3px solid cyan;
 }

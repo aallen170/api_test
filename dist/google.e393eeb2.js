@@ -17763,13 +17763,16 @@ var scaleElements = document.getElementsByClassName("scale-element");
 
 function PhotoInteract() {
   var _loop = function _loop(i) {
+    console.log("running");
     var gestureArea = gestureAreas[i];
     var scaleElement = scaleElements[i];
     (0, _interactjs.default)(gestureArea).gesturable({
       onstart: function onstart(event) {
         angleScale.angle -= event.angle;
+        console.log("current: ".concat(event.target.className, " #").concat(i));
       },
       onmove: function onmove(event) {
+        // console.log(event.angle);
         // document.body.appendChild(new Text(event.scale))
         var currentAngle = event.angle + angleScale.angle;
         var currentScale = event.scale * angleScale.scale;
@@ -17792,7 +17795,8 @@ function PhotoInteract() {
 }
 
 function dragMoveListener(event) {
-  var target = event.target; // keep the dragged position in the data-x/data-y attributes
+  var target = event.target;
+  console.log(event.target.id); // keep the dragged position in the data-x/data-y attributes
 
   var x = (parseFloat(target.getAttribute('data-x')) || 0) + event.dx;
   var y = (parseFloat(target.getAttribute('data-y')) || 0) + event.dy; // translate the element
@@ -17884,74 +17888,91 @@ function clearPage() {
 }
 
 function search() {
-  var numOfPages = 1;
-  var photoList = []; //Make non-repeatable random numbers between 1 - 90
+  var randomNum,
+      i = 0,
+      pageNumsVisited = [],
+      pageNum,
+      numOfPages = 5,
+      photoList = [],
+      photosAtATime = 3,
+      photoNumsGrabbed = [],
+      wait = 0;
 
-  for (var i = 0; i < numOfPages; i++) {
-    console.log("that");
-
-    var _pageNum = Math.floor(Math.random() * 90) + 1; // console.log(pageNum);
-
-
-    getPagesURL = "https://www.googleapis.com/customsearch/v1?key=AIzaSyBuzXX0QdY0l4BXgKXkgn-pBur-bRRZ8sQ&cx=001890896498940584054:ltxzdnhqnbk&q=".concat(query, "&searchType=image&start=").concat(_pageNum); // getPagesURL = `https://www.googleapis.com/customsearch/v1?key=AIzaSyBuzXX0QdY0l4BXgKXkgn-pBur-bRRZ8sQ&cx=001890896498940584054:ltxzdnhqnbk&q=${query}&searchType=image`
-
-    request(getPagesURL).then(function (data) {
-      // console.log("items:");
-      // console.log(data.items);
-      data.items.forEach(function (item) {
-        // console.log(item);
-        photoList.push(item);
-      });
-    }).then(function () {
-      clearPage(); // photoList.forEach((photoInfo, i) => {
-      //     results.innerHTML +=
-      //     `<div class="resizable" id="obj${i}" style="width: 200px;">
-      //         <div class='resizers'>
-      //             <img src="${photoInfo.link}">
-      //             <div class='resizer top-left'></div>
-      //             <div class='resizer top-right'></div>
-      //             <div class='resizer bottom-left'></div>
-      //             <div class='resizer bottom-right'></div>
-      //         </div>
-      //     </div>`;
-      // });
-      // let gestureAreaArray = [];
-
-      photoList.forEach(function (photoInfo, i) {
-        results.innerHTML += "<div class=\"gesture-area\">\n                <img src=\"".concat(photoInfo.link, "\" class=\"scale-element\" onmousedown=\"topImg()\" ontouchstart=\"topImg()\" style=\"z-index: 0;\"/>\n                </div>"); // gestureAreaArray.push(document.getElementById(`gesture-area${i}`));
-      }); // photoList.forEach((photoInfo, i) => {
-      //     results.innerHTML +=
-      //     `<div id="gesture-area${i}"></div>`;
-      //     gestureAreaArray.push(document.getElementById(`gesture-area${i}`));
-      // });
-      // photoList.forEach((photoInfo, i) => {
-      //     gestureAreaArray[i].innerHTML +=
-      //     `<img src="${photoInfo.link}" id="scale-element${i}">`;
-      // });
-      // photoList.forEach((photoInfo, i) => {
-      //     results.innerHTML =
-      //     `<img src="${photoInfo.link}" id="scale-element">`;
-      // });
-      // let resizableObjs = document.getElementsByClassName("resizable");
-      // console.log("resizableObjs:");
-      // console.log(resizableObjs);
-      // console.log("resizableObjs length = " + resizableObjs.length);
-      // for (let i = 0; i < resizableObjs.length; i++) {
-      //     // console.log("resizableObj #" + i + ": ");
-      //     // console.log(resizableObjs[i]);
-      //     resizableObjs[i].addEventListener('touchstart', () => {
-      //         // console.log('touching');
-      //     });
-      //     mouseDragElement(resizableObjs[i]);
-      //     makeResizableDiv(`#scale-element${i}`);
-      // }
-
-      (0, _interactTest.PhotoInteract)();
+  while (i < numOfPages) {
+    var valid = true;
+    pageNum = Math.floor(Math.random() * 90) + 1;
+    pageNumsVisited.forEach(function (num) {
+      if (num === pageNum) valid = false;
     });
-  }
-}
 
-;
+    if (valid) {
+      i++;
+      pageNumsVisited.push(pageNum);
+      getPagesURL = "https://www.googleapis.com/customsearch/v1?key=AIzaSyBuzXX0QdY0l4BXgKXkgn-pBur-bRRZ8sQ&cx=001890896498940584054:ltxzdnhqnbk&q=".concat(query, "&searchType=image&start=").concat(pageNum);
+      request(getPagesURL).then(function (data) {
+        // for (let i = 0; i < photosAtATime; i++) {
+        //     randomNum = Math.floor(Math.random() * data.items.length) + 1;
+        //     photoList.push(data.items[randomNum]);
+        // }
+        data.items.forEach(function (item, i) {
+          // console.log(photoList[i]);
+          photoList.push(item);
+        });
+        wait++;
+      }).then(function () {
+        if (wait === numOfPages) {
+          var j = 0;
+
+          while (j < photosAtATime) {
+            randomNum = Math.floor(Math.random() * photoList.length);
+            var _valid = true;
+            photoNumsGrabbed.forEach(function (num) {
+              if (num === randomNum) _valid = false;
+            });
+
+            if (_valid) {
+              j++;
+              photoNumsGrabbed.push(randomNum);
+              console.log(photoList[randomNum]);
+              results.innerHTML += "<div class=\"gesture-area\">\n                            <img src=\"".concat(photoList[randomNum].link, "\" class=\"scale-element\"/>\n                            </div>");
+            }
+          }
+        }
+
+        (0, _interactTest.PhotoInteract)();
+      });
+    }
+  } //Make non-repeatable random numbers between 1 - 90
+  // for (let i = 0; i < numOfPages; i++) {
+  //     request(getPagesURL).then(data => {
+  //         // console.log("items:");
+  //         // console.log(data.items);
+  //         // randomPhoto = data.items[randomNum];
+  //         for (let i = 0; i < 3; i++) {
+  //             randomNum = Math.floor(Math.random() * data.items.length) + 1;
+  //             photoList.push(data.items[randomNum]);
+  //         }
+  //         // data.items.forEach(item => {
+  //         //     // console.log(item);
+  //         //     photoList.push(item);
+  //         // });
+  //     }).then(() => {
+  //         // clearPage();
+  //         // results.innerHTML +=
+  //         //     `<div class="gesture-area">
+  //         //     <img src="${randomPhoto.link}" class="scale-element"/>
+  //         //     </div>`;
+  //         photoList.forEach((photoInfo, i) => {
+  //             results.innerHTML +=
+  //             `<div class="gesture-area">
+  //             <img src="${photoInfo.link}" class="scale-element"/>
+  //             </div>`;
+  //         });
+  //         PhotoInteract();
+  //     });
+  // }
+
+}
 },{"babel-polyfill":"node_modules/babel-polyfill/lib/index.js","./interactTest":"interactTest.js"}],"../../AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
@@ -17980,7 +18001,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "63500" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "53159" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
