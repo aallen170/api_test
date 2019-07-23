@@ -1,8 +1,8 @@
 import "babel-polyfill";
 
 import { PhotoInteract } from './interactTest';
-import { dragMoveListener } from './interactTest';
-import { gesture } from "@interactjs/actions";
+// import { dragMoveListener } from './interactTest';
+// import { gesture } from "@interactjs/actions";
 
 let query = '';
 let pageNum;
@@ -48,8 +48,8 @@ function search() {
 
         // console.log(pageNum);
 
-        // getPagesURL = `https://www.googleapis.com/customsearch/v1?key=AIzaSyBuzXX0QdY0l4BXgKXkgn-pBur-bRRZ8sQ&cx=001890896498940584054:ltxzdnhqnbk&q=${query}&searchType=image&start=${pageNum}`
-        getPagesURL = `https://www.googleapis.com/customsearch/v1?key=AIzaSyBuzXX0QdY0l4BXgKXkgn-pBur-bRRZ8sQ&cx=001890896498940584054:ltxzdnhqnbk&q=${query}&searchType=image`
+        getPagesURL = `https://www.googleapis.com/customsearch/v1?key=AIzaSyBuzXX0QdY0l4BXgKXkgn-pBur-bRRZ8sQ&cx=001890896498940584054:ltxzdnhqnbk&q=${query}&searchType=image&start=${pageNum}`
+        // getPagesURL = `https://www.googleapis.com/customsearch/v1?key=AIzaSyBuzXX0QdY0l4BXgKXkgn-pBur-bRRZ8sQ&cx=001890896498940584054:ltxzdnhqnbk&q=${query}&searchType=image`
 
         request(getPagesURL).then(data => {
             // console.log("items:");
@@ -72,14 +72,14 @@ function search() {
             //         </div>
             //     </div>`;
             // });
-            let gestureAreaArray = [];
+            // let gestureAreaArray = [];
 
             photoList.forEach((photoInfo, i) => {
                 results.innerHTML +=
                 `<div class="gesture-area">
-                <img src="${photoInfo.link}" class="scale-element">
+                <img src="${photoInfo.link}" class="scale-element" onmousedown="topImg()" ontouchstart="topImg()" style="z-index: 0;"/>
                 </div>`;
-                gestureAreaArray.push(document.getElementById(`gesture-area${i}`));
+                // gestureAreaArray.push(document.getElementById(`gesture-area${i}`));
             });
 
             // photoList.forEach((photoInfo, i) => {
