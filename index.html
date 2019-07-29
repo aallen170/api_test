@@ -4,117 +4,25 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Index</title>
+    <title>InteractJS Test</title>
     <link rel="stylesheet" href="interactTest.css">
-    <!-- <link rel="stylesheet" href="canvasTest.css"> -->
 </head>
 <body>
     <input type="text" id="query">
 
     <button id="search">Search</button>
     <button id="clear">Clear Page</button>
-    <div id="deleteDIV"><button id="deleteBTN">Delete Selected Img</button></div>
-
-    <!-- <div class="resizable" style="width: 200px;">
-        <div class='resizers'>
-            <img src="https://img.purch.com/w/660/aHR0cDovL3d3dy5saXZlc2NpZW5jZS5jb20vaW1hZ2VzL2kvMDAwLzEwMC8zNDkvb3JpZ2luYWwvc2liZXJpYW4tdGlnZXIuanBn">
-            <div class='resizer top-left'></div>
-            <div class='resizer top-right'></div>
-            <div class='resizer bottom-left'></div>
-            <div class='resizer bottom-right'></div>
-        </div>
-    </div> -->
+    <br>
+    <button id="deleteBTN">Delete Selected Img</button>
+    <span id="safeSearch"><input id="safeSearchCheckbox" type="checkbox" checked>Safe Search</input></span>
 
     <div id="results"></div>
     
-    <!-- <div id="result">
-
-        <div id="random-page-output"></div>
-        <br/>
-        <br/>
-        <div id="photo-output"></div>
-
-    </div> -->
-    
 </body>
-
-    <!-- <script>
-
-        let currArea = 'empty', prevArea = 'empty',
-            currElement = 'empty', prevElement = 'empty';
-        
-        function topImg() {
-            document.addEventListener('mousedown', e => {
-                e = e || window.event;
-                let target = e.target || e.srcElement,
-                    img = target.textContent || target.innerText;
-
-                currArea = e.target.parentNode;
-
-                console.log(`currArea.className before change: ${currArea.className}`);
-
-                if (currArea !== prevArea) {
-                    prevArea.className = "gesture-area";
-                }
-
-                currArea.className = "gesture-area top-img";
-                console.log(`currArea.className after change: ${currArea.className}`);
-                prevArea = currArea;
-
-                if (e.target.className.split(' ')[0] === "scale-element") {
-
-                    currElement = e.target;
-
-                    if (currElement !== prevElement) {
-                        prevElement.className = "scale-element";
-                    }
-
-                    currElement.className = "scale-element selected-img";
-                    prevElement = currElement;
-                } else {
-                    prevElement.className = "scale-element";
-                }
-            }, false);
-
-            document.addEventListener('touchstart', e => {
-                e = e || window.event;
-                let target = e.target || e.srcElement,
-                    img = target.textContent || target.innerText;
-
-                currArea = e.target.parentNode;
-
-                if (currArea !== prevArea) {
-                    prevArea.className = "gesture-area";
-                }
-
-                currArea.className = "gesture-area top-img";
-                prevArea = currArea;
-
-                if (e.target.className.split(' ')[0] === "scale-element") {
-
-                    currElement = e.target;
-
-                    if (currElement !== prevElement) {
-                        prevElement.className = "scale-element";
-                    }
-
-                    currElement.className = "scale-element selected-img";
-                    prevElement = currElement;
-                } else {
-                    prevElement.className = "scale-element";
-                }
-            }, false);
-        }
-    
-    </script> -->
 
     <script src="interactTest.js"></script>
     <script src="google.js"></script>
     <script src="topImg.js"></script>
     <script src="deletePhoto.js"></script>
-    <!-- <script src="flickr.js"></script> -->
-    <!-- <script src="canvas.js"></script> -->
-    <!-- <script src="makeResizableDiv_1.js"></script> -->
-
 
 </html>

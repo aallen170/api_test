@@ -1,13 +1,14 @@
 let deleteButton = document.getElementById("deleteBTN");
 
-deleteButton.addEventListener('mousedown', () => {
-    // console.log(document.getElementById("selected-img"));
-    let divToDelete = document.getElementById("selected-img").parentNode;
-    document.getElementById("results").removeChild(divToDelete);
+document.addEventListener('keydown', e => {
+    let key = e.which || e.keyCode;
+    if (key === 46) deletePhoto();
 });
 
-deleteButton.addEventListener('touchstart', () => {
-    // console.log(document.getElementById("selected-img"));
+deleteButton.addEventListener('mousedown', deletePhoto);
+deleteButton.addEventListener('touchstart', deletePhoto);
+
+function deletePhoto() {
     let divToDelete = document.getElementById("selected-img").parentNode;
     document.getElementById("results").removeChild(divToDelete);
-});
+}

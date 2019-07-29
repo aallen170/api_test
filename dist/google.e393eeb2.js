@@ -17759,7 +17759,12 @@ var angleScale = {
   scale: 1
 };
 var gestureAreas = document.getElementsByClassName("gesture-area");
-var scaleElements = document.getElementsByClassName("scale-element");
+var scaleElements = document.getElementsByClassName("scale-element"); // let pressingCtrl = false;
+// document.addEventListener('keydown', e => {
+//   let key = e.which || e.keyCode;
+//   if (key === 17) pressingCtrl = true;
+// });
+// console.log(pressingCtrl);
 
 function PhotoInteract() {
   var _loop = function _loop(i) {
@@ -17769,46 +17774,107 @@ function PhotoInteract() {
     (0, _interactjs.default)(gestureArea).gesturable({
       onstart: function onstart(event) {
         angleScale.angle -= event.angle;
-        console.log("current: ".concat(event.target.className, " #").concat(i));
       },
       onmove: function onmove(event) {
-        // console.log(event.angle);
-        // document.body.appendChild(new Text(event.scale))
-        var currentAngle = event.angle + angleScale.angle;
-        var currentScale = event.scale * angleScale.scale;
-        scaleElement.style.webkitTransform = scaleElement.style.transform = 'rotate(' + currentAngle + 'deg)' + 'scale(' + currentScale + ')'; // uses the dragMoveListener from the draggable demo above
-
-        dragMoveListener(event);
+        resizeElement(event, scaleElement);
       },
       onend: function onend(event) {
         angleScale.angle = angleScale.angle + event.angle;
         angleScale.scale = angleScale.scale * event.scale;
       }
     }).draggable({
-      onmove: dragMoveListener
+      // FIX THIS!!!!
+      onstart: function onstart(e) {
+        angleScale.angle -= event.angle;
+      },
+      onmove: function onmove(event) {
+        // document.addEventListener('keydown', e => {
+        //   let key = e.which || e.keyCode;
+        //   if (key === 17) mouseResize(event, scaleElement);
+        // });
+        dragMoveListener(event);
+      },
+      onend: function onend(e) {
+        angleScale.angle = angleScale.angle + event.angle;
+        angleScale.scale = angleScale.scale * event.scale;
+      }
     });
   };
 
   for (var i = 0; i < gestureAreas.length; i++) {
     _loop(i);
   }
+} // function mouseResize(event, scaleElmnt) {
+//   var target = event.target;
+//   let pressingCtrl = false;
+//   var x = (parseFloat(target.getAttribute('data-x')) || 0) + event.dx
+//   var y = (parseFloat(target.getAttribute('data-y')) || 0) + event.dy
+//   // translate the element
+//   document.addEventListener('keydown', e => {
+//     let key = e.which || e.keyCode;
+//     if (key === 17) pressingCtrl = true;
+//   });
+//   if (pressingCtrl) {
+//     target.style.webkitTransform =
+//       target.style.transform =
+//         `scale(${x})`
+//   } else {
+//     target.style.webkitTransform =
+//       target.style.transform =
+//         'translate(' + x + 'px, ' + y + 'px)'
+//   }
+//   // update the posiion attributes
+//   target.setAttribute('data-x', x)
+//   target.setAttribute('data-y', y)
+// }
+
+
+function resizeElement(event, scaleElmnt) {
+  // console.log(event.angle);
+  // document.body.appendChild(new Text(event.scale))
+  console.log("running resizeElement");
+  var currentAngle = event.angle + angleScale.angle;
+  var currentScale = event.scale * angleScale.scale;
+  scaleElmnt.style.webkitTransform = scaleElmnt.style.transform = 'rotate(' + currentAngle + 'deg)' + 'scale(' + currentScale + ')'; // uses the dragMoveListener from the draggable demo above
+
+  dragMoveListener(event);
 }
 
 function dragMoveListener(event) {
   var target = event.target;
-  console.log(event.target.id); // keep the dragged position in the data-x/data-y attributes
-
+  var pressingCtrl = false;
+  var child = target.children[0];
   var x = (parseFloat(target.getAttribute('data-x')) || 0) + event.dx;
   var y = (parseFloat(target.getAttribute('data-y')) || 0) + event.dy; // translate the element
 
-  target.style.webkitTransform = target.style.transform = 'translate(' + x + 'px, ' + y + 'px)'; // update the posiion attributes
+  child.addEventListener('keydown', function (e) {
+    var key = e.which || e.keyCode;
+
+    if (key === 17) {
+      console.log("in here");
+      pressingCtrl = true;
+    }
+  });
+
+  if (pressingCtrl) {
+    console.log("pressing ctrl");
+    target.style.webkitTransform = target.style.transform = "scale(".concat(x, ")");
+  } else {
+    console.log("not pressing ctrl");
+    target.style.webkitTransform = target.style.transform = 'translate(' + x + 'px, ' + y + 'px)';
+  } // // translate the element
+  // target.style.webkitTransform =
+  //   target.style.transform =
+  //     'translate(' + x + 'px, ' + y + 'px)'
+  // update the posiion attributes
+
 
   target.setAttribute('data-x', x);
   target.setAttribute('data-y', y);
 } // this is used later in the resizing and gesture demos
 
 
-window.dragMoveListener = dragMoveListener; // PhotoInteract();
+window.dragMoveListener = dragMoveListener;
 },{"interactjs":"node_modules/interactjs/dist/interact.js"}],"google.js":[function(require,module,exports) {
 "use strict";
 
@@ -17820,29 +17886,24 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
-// import { dragMoveListener } from './interactTest';
-// import { gesture } from "@interactjs/actions";
 var query = '';
 var pageNum;
 var queryField = document.getElementById("query");
 var searchButton = document.getElementById("search");
 var clearPageButton = document.getElementById("clear");
+var safeSearch = document.getElementById("safeSearchCheckbox");
 var getPagesURL;
-var results = document.getElementById("results"); // let results = document.getElementById("gesture-area");
-// queryField.addEventListener('keyup', editURL);
-
+var results = document.getElementById("results");
+queryField.addEventListener('keypress', function (e) {
+  var key = e.which || e.keyCode;
+  if (key === 13) editURL();
+});
 searchButton.addEventListener('click', editURL);
 clearPageButton.addEventListener('click', clearPage);
 
 function editURL() {
   query = queryField.value;
-
-  if (query === '') {
-    clearPage();
-  } else {
-    getPagesURL = "https://www.googleapis.com/customsearch/v1?key=AIzaSyBuzXX0QdY0l4BXgKXkgn-pBur-bRRZ8sQ&cx=001890896498940584054:ltxzdnhqnbk&q=".concat(query, "&searchType=image");
-    search();
-  }
+  if (!query.isEmpty()) search();
 }
 
 ;
@@ -17908,14 +17969,9 @@ function search() {
     if (valid) {
       i++;
       pageNumsVisited.push(pageNum);
-      getPagesURL = "https://www.googleapis.com/customsearch/v1?key=AIzaSyBuzXX0QdY0l4BXgKXkgn-pBur-bRRZ8sQ&cx=001890896498940584054:ltxzdnhqnbk&q=".concat(query, "&searchType=image&start=").concat(pageNum);
+      if (safeSearch.checked) getPagesURL = "https://www.googleapis.com/customsearch/v1?key=AIzaSyBuzXX0QdY0l4BXgKXkgn-pBur-bRRZ8sQ&cx=001890896498940584054:ltxzdnhqnbk&q=".concat(query, "&safe=active&searchType=image&start=").concat(pageNum);else getPagesURL = "https://www.googleapis.com/customsearch/v1?key=AIzaSyBuzXX0QdY0l4BXgKXkgn-pBur-bRRZ8sQ&cx=001890896498940584054:ltxzdnhqnbk&q=".concat(query, "&safe=off&searchType=image&start=").concat(pageNum);
       request(getPagesURL).then(function (data) {
-        // for (let i = 0; i < photosAtATime; i++) {
-        //     randomNum = Math.floor(Math.random() * data.items.length) + 1;
-        //     photoList.push(data.items[randomNum]);
-        // }
         data.items.forEach(function (item, i) {
-          // console.log(photoList[i]);
           photoList.push(item);
         });
         wait++;
@@ -17942,37 +17998,12 @@ function search() {
         (0, _interactTest.PhotoInteract)();
       });
     }
-  } //Make non-repeatable random numbers between 1 - 90
-  // for (let i = 0; i < numOfPages; i++) {
-  //     request(getPagesURL).then(data => {
-  //         // console.log("items:");
-  //         // console.log(data.items);
-  //         // randomPhoto = data.items[randomNum];
-  //         for (let i = 0; i < 3; i++) {
-  //             randomNum = Math.floor(Math.random() * data.items.length) + 1;
-  //             photoList.push(data.items[randomNum]);
-  //         }
-  //         // data.items.forEach(item => {
-  //         //     // console.log(item);
-  //         //     photoList.push(item);
-  //         // });
-  //     }).then(() => {
-  //         // clearPage();
-  //         // results.innerHTML +=
-  //         //     `<div class="gesture-area">
-  //         //     <img src="${randomPhoto.link}" class="scale-element"/>
-  //         //     </div>`;
-  //         photoList.forEach((photoInfo, i) => {
-  //             results.innerHTML +=
-  //             `<div class="gesture-area">
-  //             <img src="${photoInfo.link}" class="scale-element"/>
-  //             </div>`;
-  //         });
-  //         PhotoInteract();
-  //     });
-  // }
-
+  }
 }
+
+String.prototype.isEmpty = function () {
+  return this.length === 0 || !this.trim();
+};
 },{"babel-polyfill":"node_modules/babel-polyfill/lib/index.js","./interactTest":"interactTest.js"}],"../../AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
@@ -18001,7 +18032,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "53159" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "58596" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
