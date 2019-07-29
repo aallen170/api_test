@@ -9,7 +9,7 @@ let adder = function(a,b) {
 let pi = 3.142;
 
 module.exports = {
-    counter: counter,
-    adder: adder,
-    pi: pi
+    counter,
+    adder,
+    pi
 };
