@@ -9761,12 +9761,7 @@ var angleScale = {
   scale: 1
 };
 var gestureAreas = document.getElementsByClassName("gesture-area");
-var scaleElements = document.getElementsByClassName("scale-element"); // let pressingCtrl = false;
-// document.addEventListener('keydown', e => {
-//   let key = e.which || e.keyCode;
-//   if (key === 17) pressingCtrl = true;
-// });
-// console.log(pressingCtrl);
+var scaleElements = document.getElementsByClassName("scale-element");
 
 function PhotoInteract() {
   var _loop = function _loop(i) {
@@ -9778,36 +9773,36 @@ function PhotoInteract() {
         angleScale.angle -= event.angle;
       },
       onmove: function onmove(event) {
-        // console.log(event.angle);
         // document.body.appendChild(new Text(event.scale))
-        console.log("running resizeElement");
         var currentAngle = event.angle + angleScale.angle;
         var currentScale = event.scale * angleScale.scale;
         scaleElement.style.webkitTransform = scaleElement.style.transform = 'rotate(' + currentAngle + 'deg)' + 'scale(' + currentScale + ')'; // uses the dragMoveListener from the draggable demo above
 
-        dragMoveListener(event); // resizeElement(event, scaleElement);
+        dragMoveListener(event);
       },
       onend: function onend(event) {
         angleScale.angle = angleScale.angle + event.angle;
         angleScale.scale = angleScale.scale * event.scale;
       }
     }).draggable({
-      // FIX THIS!!!!
-      onstart: function onstart(e) {
-        angleScale.angle -= event.angle;
-      },
-      onmove: function onmove(event) {
-        // document.addEventListener('keydown', e => {
-        //   let key = e.which || e.keyCode;
-        //   if (key === 17) mouseResize(event, scaleElement);
-        // });
-        dragMoveListener(event);
-      },
-      onend: function onend(e) {
-        angleScale.angle = angleScale.angle + event.angle;
-        angleScale.scale = angleScale.scale * event.scale;
-      }
-    });
+      onmove: dragMoveListener
+    }); // .draggable({
+    //   // FIX THIS!!!!
+    //   onstart: e => {
+    //     angleScale.angle -= event.angle
+    //   },
+    //   onmove: event => {
+    //     // document.addEventListener('keydown', e => {
+    //     //   let key = e.which || e.keyCode;
+    //     //   if (key === 17) mouseResize(event, scaleElement);
+    //     // });
+    //     dragMoveListener(event);
+    //   },
+    //   onend: e => {
+    //     angleScale.angle = angleScale.angle + event.angle
+    //     angleScale.scale = angleScale.scale * event.scale
+    //   }
+    // })
   };
 
   for (var i = 0; i < gestureAreas.length; i++) {
