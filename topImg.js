@@ -8,8 +8,6 @@ document.addEventListener('mousedown', e => {
 
     currArea = e.target.parentNode;
 
-    console.log(currArea.tagName);
-
     if (currArea.className === "gesture-area") {
         currArea.style.zIndex = currZIndex;
         currZIndex++;

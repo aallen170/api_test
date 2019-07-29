@@ -9761,7 +9761,12 @@ var angleScale = {
   scale: 1
 };
 var gestureAreas = document.getElementsByClassName("gesture-area");
-var scaleElements = document.getElementsByClassName("scale-element");
+var scaleElements = document.getElementsByClassName("scale-element"); // let pressingCtrl = false;
+// document.addEventListener('keydown', e => {
+//   let key = e.which || e.keyCode;
+//   if (key === 17) pressingCtrl = true;
+// });
+// console.log(pressingCtrl);
 
 function PhotoInteract() {
   var _loop = function _loop(i) {
@@ -9771,46 +9776,107 @@ function PhotoInteract() {
     (0, _interactjs.default)(gestureArea).gesturable({
       onstart: function onstart(event) {
         angleScale.angle -= event.angle;
-        console.log("current: ".concat(event.target.className, " #").concat(i));
       },
       onmove: function onmove(event) {
-        // console.log(event.angle);
-        // document.body.appendChild(new Text(event.scale))
-        var currentAngle = event.angle + angleScale.angle;
-        var currentScale = event.scale * angleScale.scale;
-        scaleElement.style.webkitTransform = scaleElement.style.transform = 'rotate(' + currentAngle + 'deg)' + 'scale(' + currentScale + ')'; // uses the dragMoveListener from the draggable demo above
-
-        dragMoveListener(event);
+        resizeElement(event, scaleElement);
       },
       onend: function onend(event) {
         angleScale.angle = angleScale.angle + event.angle;
         angleScale.scale = angleScale.scale * event.scale;
       }
     }).draggable({
-      onmove: dragMoveListener
+      // FIX THIS!!!!
+      onstart: function onstart(e) {
+        angleScale.angle -= event.angle;
+      },
+      onmove: function onmove(event) {
+        // document.addEventListener('keydown', e => {
+        //   let key = e.which || e.keyCode;
+        //   if (key === 17) mouseResize(event, scaleElement);
+        // });
+        dragMoveListener(event);
+      },
+      onend: function onend(e) {
+        angleScale.angle = angleScale.angle + event.angle;
+        angleScale.scale = angleScale.scale * event.scale;
+      }
     });
   };
 
   for (var i = 0; i < gestureAreas.length; i++) {
     _loop(i);
   }
+} // function mouseResize(event, scaleElmnt) {
+//   var target = event.target;
+//   let pressingCtrl = false;
+//   var x = (parseFloat(target.getAttribute('data-x')) || 0) + event.dx
+//   var y = (parseFloat(target.getAttribute('data-y')) || 0) + event.dy
+//   // translate the element
+//   document.addEventListener('keydown', e => {
+//     let key = e.which || e.keyCode;
+//     if (key === 17) pressingCtrl = true;
+//   });
+//   if (pressingCtrl) {
+//     target.style.webkitTransform =
+//       target.style.transform =
+//         `scale(${x})`
+//   } else {
+//     target.style.webkitTransform =
+//       target.style.transform =
+//         'translate(' + x + 'px, ' + y + 'px)'
+//   }
+//   // update the posiion attributes
+//   target.setAttribute('data-x', x)
+//   target.setAttribute('data-y', y)
+// }
+
+
+function resizeElement(event, scaleElmnt) {
+  // console.log(event.angle);
+  // document.body.appendChild(new Text(event.scale))
+  console.log("running resizeElement");
+  var currentAngle = event.angle + angleScale.angle;
+  var currentScale = event.scale * angleScale.scale;
+  scaleElmnt.style.webkitTransform = scaleElmnt.style.transform = 'rotate(' + currentAngle + 'deg)' + 'scale(' + currentScale + ')'; // uses the dragMoveListener from the draggable demo above
+
+  dragMoveListener(event);
 }
 
 function dragMoveListener(event) {
   var target = event.target;
-  console.log(event.target.id); // keep the dragged position in the data-x/data-y attributes
-
+  var pressingCtrl = false;
+  var child = target.children[0];
   var x = (parseFloat(target.getAttribute('data-x')) || 0) + event.dx;
   var y = (parseFloat(target.getAttribute('data-y')) || 0) + event.dy; // translate the element
 
-  target.style.webkitTransform = target.style.transform = 'translate(' + x + 'px, ' + y + 'px)'; // update the posiion attributes
+  child.addEventListener('keydown', function (e) {
+    var key = e.which || e.keyCode;
+
+    if (key === 17) {
+      console.log("in here");
+      pressingCtrl = true;
+    }
+  });
+
+  if (pressingCtrl) {
+    console.log("pressing ctrl");
+    target.style.webkitTransform = target.style.transform = "scale(".concat(x, ")");
+  } else {
+    console.log("not pressing ctrl");
+    target.style.webkitTransform = target.style.transform = 'translate(' + x + 'px, ' + y + 'px)';
+  } // // translate the element
+  // target.style.webkitTransform =
+  //   target.style.transform =
+  //     'translate(' + x + 'px, ' + y + 'px)'
+  // update the posiion attributes
+
 
   target.setAttribute('data-x', x);
   target.setAttribute('data-y', y);
 } // this is used later in the resizing and gesture demos
 
 
-window.dragMoveListener = dragMoveListener; // PhotoInteract();
+window.dragMoveListener = dragMoveListener;
 },{"interactjs":"node_modules/interactjs/dist/interact.js"}],"../../AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
@@ -9839,7 +9905,11 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
+<<<<<<< HEAD
   var ws = new WebSocket(protocol + '://' + hostname + ':' + "61851" + '/');
+=======
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "52329" + '/');
+>>>>>>> a896674e23b6fc891d0648cd12794dcb0a7ec02d
 
   ws.onmessage = function (event) {
     checkedAssets = {};

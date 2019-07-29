@@ -20,4 +20,12 @@ html {
     border: 3px solid cyan;
 }
 
+#safeSearch {
+    background-color: white;
+    position: relative;
+    top: 1px;
+    padding: 2px;
+    border: 1px solid black;
+}
+
 /*# sourceMappingURL=/interactTest.5a1f907b.css.map */

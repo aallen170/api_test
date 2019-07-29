@@ -127,7 +127,6 @@ document.addEventListener('mousedown', function (e) {
   var target = e.target || e.srcElement,
       img = target.textContent || target.innerText;
   currArea = e.target.parentNode;
-  console.log(currArea.tagName);
 
   if (currArea.className === "gesture-area") {
     currArea.style.zIndex = currZIndex;
@@ -199,7 +198,11 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
+<<<<<<< HEAD
   var ws = new WebSocket(protocol + '://' + hostname + ':' + "61851" + '/');
+=======
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "52329" + '/');
+>>>>>>> a896674e23b6fc891d0648cd12794dcb0a7ec02d
 
   ws.onmessage = function (event) {
     checkedAssets = {};
