@@ -28,7 +28,21 @@ export function PhotoInteract() {
         angleScale.angle -= event.angle
       },
       onmove: function (event) {
-        resizeElement(event, scaleElement);
+        // console.log(event.angle);
+        // document.body.appendChild(new Text(event.scale))
+        console.log("running resizeElement");
+        var currentAngle = event.angle + angleScale.angle
+        var currentScale = event.scale * angleScale.scale
+        
+        scaleElement.style.webkitTransform =
+        scaleElement.style.transform =
+        'rotate(' + currentAngle + 'deg)' + 'scale(' + currentScale + ')'
+        
+        // uses the dragMoveListener from the draggable demo above
+        
+        dragMoveListener(event)
+
+        // resizeElement(event, scaleElement);
       },
       onend: function (event) {
         angleScale.angle = angleScale.angle + event.angle
