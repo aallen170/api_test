@@ -17776,7 +17776,14 @@ function PhotoInteract() {
         angleScale.angle -= event.angle;
       },
       onmove: function onmove(event) {
-        resizeElement(event, scaleElement);
+        // console.log(event.angle);
+        // document.body.appendChild(new Text(event.scale))
+        console.log("running resizeElement");
+        var currentAngle = event.angle + angleScale.angle;
+        var currentScale = event.scale * angleScale.scale;
+        scaleElement.style.webkitTransform = scaleElement.style.transform = 'rotate(' + currentAngle + 'deg)' + 'scale(' + currentScale + ')'; // uses the dragMoveListener from the draggable demo above
+
+        dragMoveListener(event); // resizeElement(event, scaleElement);
       },
       onend: function onend(event) {
         angleScale.angle = angleScale.angle + event.angle;
@@ -18032,11 +18039,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-<<<<<<< HEAD
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "61851" + '/');
-=======
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "52329" + '/');
->>>>>>> a896674e23b6fc891d0648cd12794dcb0a7ec02d
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "61912" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
